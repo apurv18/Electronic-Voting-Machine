@@ -90,6 +90,11 @@ passwd1 db 	'AAAAA'
 passwd2 db 	'BBBBB'
 passwd3 db 	'CCCCC'
 passwd4 db 	'DDDDD'
+passwd5 db 	'DDDAA'
+passwd6 db 	'DDDBB'
+passwd7 db 	'DDFFF'
+passwd8 db 	'DDEEE'
+
 passadm db	'EEEEE'
 locker  db  'FFFFF'
 unlocker db 'GGGGG'
@@ -161,6 +166,38 @@ START:
 			CALL    CHECKPASS
 			cmp bp,0h
 			jz m4
+			call disp_correct
+			
+	m5:		call disp_c5
+			call disp_passwd
+			LEA 	SI,passwd5                   ;To check for candidate 5
+			CALL    CHECKPASS
+			cmp bp,0h
+			jz m5
+			call disp_correct
+			
+	m6:		call disp_c6
+			call disp_passwd
+			LEA 	SI,passwd6                   ;To check for candidate 6
+			CALL    CHECKPASS
+			cmp bp,0h
+			jz m6
+			call disp_correct
+			
+	m7:		call disp_c7
+			call disp_passwd
+			LEA 	SI,passwd7                   ;To check for candidate 7
+			CALL    CHECKPASS
+			cmp bp,0h
+			jz m7
+			call disp_correct
+			
+	m8:		call disp_c8
+			call disp_passwd
+			LEA 	SI,passwd8                   ;To check for candidate 8
+			CALL    CHECKPASS
+			cmp bp,0h
+			jz m8
 			call disp_correct
 
 	m9:		call disp_admin
@@ -523,6 +560,41 @@ GetVotingData proc 	near
 					cmp  bx,c8key
 					jnz  ca
 					MOV dx,c4votes
+					call clear_lcd
+					call convertToBCD
+					call disp_vote_cnt
+					jmp	 final
+		
+		display5: 
+					cmp  bx,c8key
+					jnz  ca
+					MOV dx,c5votes
+					call clear_lcd
+					call convertToBCD
+					call disp_vote_cnt
+					jmp	 final
+		display6: 
+					cmp  bx,c8key
+					jnz  ca
+					MOV dx,c6votes
+					call clear_lcd
+					call convertToBCD
+					call disp_vote_cnt
+					jmp	 final
+					
+		display7: 
+					cmp  bx,c8key
+					jnz  ca
+					MOV dx,c7votes
+					call clear_lcd
+					call convertToBCD
+					call disp_vote_cnt
+					jmp	 final
+					
+		display8: 
+					cmp  bx,c8key
+					jnz  ca
+					MOV dx,c8votes
 					call clear_lcd
 					call convertToBCD
 					call disp_vote_cnt
